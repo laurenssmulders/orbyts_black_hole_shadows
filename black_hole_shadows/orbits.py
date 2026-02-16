@@ -1,14 +1,19 @@
-"""Generates photon orbits around a Schwarzschild black hole."""
-
+""" Generates photon orbits around a black hole."""
 import numpy as np
-from scipy.integrate import solve_ivp
-    
-def calc_photon_orbit(A, B, dAdr, dBdr, r0, phi0, b, n_loops, n_points_per_loop):
-    """
-    Calculates photon orbits around a Schwarzschild black hole.
+from scipy.optimize import root
+import matplotlib.pyplot as plt
+from .utils import Metric
+
+def generate_orbit(b, D, metric, n_points=100000):
+    """Generates a photon orbit around a black hole with given metric functions 
+    A and B.
 
     Parameters
     ----------
+    b : float
+        Impact parameter of the photon.
+    D : float
+        Distance of the observer from the black hole.
     A : function
         Metric function A(r).
     B : function
@@ -17,117 +22,80 @@ def calc_photon_orbit(A, B, dAdr, dBdr, r0, phi0, b, n_loops, n_points_per_loop)
         Derivative of A with respect to r.
     dBdr : function
         Derivative of B with respect to r.
-    r0 : float
-        Initial radius.
-    phi0 : float
-        Initial angle.
-    b : float
-        Impact parameter.
-    n_loops : int
-        Number of loops to calculate.
-    n_points_per_loop : int
-        Number of points per loop.
+    n_points : int, optional
+        Number of points to generate in the orbit. The default is 100000.   
 
     Returns
     -------
-    r_sol_plus : array
-        Radial coordinates for the "plus" solution.
-    r_sol_minus : array
-        Radial coordinates for the "minus" solution.
-    phi_sol_plus : array
-        Angular coordinates for the "plus" solution.
-    phi_sol_minus : array
-        Angular coordinates for the "minus" solution.
+    phi : array
+        Array of phi values along the orbit.
+    y : array
+        Array of r and dr/dphi values along the orbit.
     """
+    if b >= 0:
+        direction = +1
+    else:
+        direction = -1
+    # Initial conditions
+    r0 = np.sqrt(D**2 + b**2)
+    phi0 = np.arctan(b/D)
+    kh2 = metric.A(r0)/(r0**2*metric.B(r0))*(metric.B(r0)+D**2/b**2) # The (k/h)^2 constant to obtain the initial dr/dphi
 
+    # Residue equation
+    def res(yi):
+        return np.array([
+            yi[1],
+            -yi[0]*metric.B(yi[0])-0.5*yi[0]**2*metric.dBdr(yi[0]) 
+            + yi[0]**4*metric.B(yi[0])/(2*metric.A(yi[0]))*kh2*(
+                4/yi[0]+metric.dBdr(yi[0])/metric.B(yi[0])-metric.dAdr(yi[0])/metric.A(yi[0]))
+        ])
 
-    y0_plus = r0*np.array([1, +np.sqrt(B(r0)*(r0**2/(b**2*A(r0))-1))]) # y = [r, dr/dphi]
-    y0_minus = r0*np.array([1, -np.sqrt(B(r0)*(r0**2/(b**2*A(r0))-1))])
+    phi = np.zeros(np.array([n_points]))
+    y = np.zeros(np.array([n_points,2]))
 
-    def dydphi(phi, y):
-        r = y[0]
-        drdphi = y[1]
-        return np.array([drdphi,-r*B(r)-0.5*r**2*dBdr(r)+r**4*B(r)/(2*b**2*A(r))*(4/r+dBdr(r)/B(r)-dAdr(r)/A(r))])
+    # Initial conditions
+    phi[0] = phi0
+    y[0] = np.array([r0, -r0*D/b]) # dr/dphi = -r0*D/b from the geometry of the problem
+    for n in range(0,n_points-1):
+        # Adapting the stepsize if the derivative becomes too large for b < 1, 
+        # to avoid numerical instabilities.
+        if abs(y[n,1]) > y[n,0]:
+            dphi = direction*4*np.pi/n_points*y[n,0]/abs(y[n,1])
+        else:
+            dphi = direction*4*np.pi/n_points
+        k1 = res(y[n])
+        k2 = res(y[n]+dphi/2*k1)
+        k3 = res(y[n]+dphi/2*k2)
+        k4 = res(y[n]+dphi*k3)
+        phi[n+1] = phi[n] + dphi
+        y[n+1] = y[n] + dphi*(k1 + 2*k2 + 2*k3 + k4)/6
+        if y[n+1,0] < 0: # If we get a negative radius, stop the integration
+            print("Negative radius! After", n+1, "steps.")
+            phi = phi[:n+2]
+            y = y[:n+2]
+            break
+        if y[n+1,0] < 1: # If we get inside the event horizon, stop the integration
+            print("Photon captured by the black hole after ", n+1, "steps.")
+            phi = phi[:n+2]
+            y = y[:n+2]
+            break
+        if y[n+1,0] > 1000: # If we get too far away, stop the integration
+            print("Photon escaped to infinity after ", n+1, "steps.")
+            phi = phi[:n+2]
+            y = y[:n+2]
+            break
+    return phi, y
 
-    def event_y0_less_than_1(t, y):
-        return y[0] - 1
-
-    event_y0_less_than_1.terminal = True     # stop integration
-    event_y0_less_than_1.direction = -1      # only trigger when decreasing
-
-
-    sol_plus_fwd = solve_ivp(dydphi, (phi0,phi0+2*n_loops*np.pi), y0_plus, events=event_y0_less_than_1, dense_output=True, t_eval=np.linspace(phi0, phi0+2*n_loops*np.pi, n_points_per_loop*n_loops))
-    sol_plus_bwd = solve_ivp(dydphi, (phi0,phi0-2*n_loops*np.pi), y0_plus, events=event_y0_less_than_1, dense_output=True, t_eval=np.linspace(phi0, phi0-2*n_loops*np.pi, n_points_per_loop*n_loops))
-    sol_minus_fwd = solve_ivp(dydphi, (phi0,phi0+2*n_loops*np.pi), y0_minus, events=event_y0_less_than_1, dense_output=True, t_eval=np.linspace(phi0, phi0+2*n_loops*np.pi, n_points_per_loop*n_loops))
-    sol_minus_bwd = solve_ivp(dydphi, (phi0,phi0-2*n_loops*np.pi), y0_minus, events=event_y0_less_than_1, dense_output=True, t_eval=np.linspace(phi0, phi0-2*n_loops*np.pi, n_points_per_loop*n_loops))
-
-    y_sol_plus = np.concatenate((sol_plus_bwd.y, sol_plus_fwd.y), axis=1)
-    y_sol_minus = np.concatenate((sol_minus_bwd.y, sol_minus_fwd.y), axis=1)
-    phi_sol_plus = np.concatenate((sol_plus_bwd.t, sol_plus_fwd.t))
-    phi_sol_minus = np.concatenate((sol_minus_bwd.t, sol_minus_fwd.t))
-
-    r_sol_plus = y_sol_plus[0]
-    r_sol_minus = y_sol_minus[0]
-    # Giving r and phi in both directions from the initial point
-    return r_sol_plus, r_sol_minus, phi_sol_plus, phi_sol_minus
-
-class PhotonOrbit:
-    """Class to calculate photon orbits around a Schwarzschild black hole.
-    
-    Attributes
-    ----------
-    r0 : float
-        Initial radius.
-    phi0 : float
-        Initial angle.
-    b : float
-        Impact parameter.
-    sol : tuple
-        Solution containing radial and angular coordinates.
-    """
-    def __init__(self, r0, phi0, b):
-        self.r0 = r0
-        self.phi0 = phi0
+class Orbit:
+    """Class to represent a photon orbit around a black hole."""
+    def __init__(self, b, D, metric, n_points=100000):
         self.b = b
+        self.D = D
+        self.metric = metric
+        self.n_points = n_points
+        self.phi, self.y = generate_orbit(b, D, metric, n_points)
 
-    def calculate(self, A, B, dAdr, dBdr, n_loops, n_points_per_loop):
-        self.sol = calc_photon_orbit(A, B, dAdr, dBdr, self.r0, self.phi0, 
-                                     self.b, n_loops, n_points_per_loop)
-        
-class PointSource:
-    """Class representing a point source of photons.
     
-    Attributes
-    ----------
-    r : float
-        Radial coordinate of the source.
-    phi : float
-        Angular coordinate of the source.
-    """
-    def __init__(self, r, phi):
-        self.r = r
-        self.phi = phi
 
-    def calculate_ps_trajectories(self, A, B, dAdr, dBdr, n_trajectories, 
-                                  n_loops, n_points_per_loop):
-        """Calculates a set of photon trajectories from the point source."""
-        self.trajectories = []
-        b_values = np.linspace(0, self.r/np.sqrt(A(self.r)), n_trajectories)
-        for b in b_values:
-            orbit = PhotonOrbit(self.r, self.phi, b)
-            orbit.calculate(A, B, dAdr, dBdr, n_loops, n_points_per_loop)
-            self.trajectories.append(orbit)
 
-    def find_matching_impact_parameter(self, target_r, target_phi):
-        # Need to update this with the fact that there might be two possible matching impact parameters
-        """Finds the impact parameter that leads to a trajectory passing through
-        the specified (target_r, target_phi) point.
-        """
-        for orbit in self.trajectories:
-            r_sol_plus, r_sol_minus, phi_sol_plus, phi_sol_minus = orbit.sol
-            for r_sol, phi_sol in [(r_sol_plus, phi_sol_plus), (r_sol_minus, 
-                                                                phi_sol_minus)]:
-                for r, phi in zip(r_sol, phi_sol):
-                    if np.isclose(r, target_r) and np.isclose(phi, target_phi):
-                        return orbit.b
-        return None
+

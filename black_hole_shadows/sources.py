@@ -223,7 +223,7 @@ class Box:
                    - self.alpha_values[alpha_index])) / 2
                 self.pixel_brightness[b_index, alpha_index] /= area
 
-    def plot_image(self, n_plot_points=1000, smoothing=0):
+    def plot_image(self, n_plot_points=1000, smoothing=0, cmap="afmhot", kernel="linear", log=True):
         """Plots the image of the box on the screen based on the pixel brightness."""
         # Flattening the arrays
         pixels_flattened = self.pixels.reshape(-1,2)
@@ -234,7 +234,11 @@ class Box:
         pixels_recast[:,2] = np.sin(pixels_flattened[:,1])
         brightness_flattened = self.pixel_brightness.flatten()
         # Interpolating the brightness values for a smooth plot
-        rbf = RBFInterpolator(pixels_recast, brightness_flattened, smoothing=smoothing)
+        if log:
+            # Taking a log to ensure all features are visible
+            rbf = RBFInterpolator(pixels_recast, np.log(1+brightness_flattened), smoothing=smoothing, kernel=kernel)
+        else:
+            rbf = RBFInterpolator(pixels_recast, brightness_flattened, smoothing=smoothing, kernel=kernel)
         # Creating an x,y grid for plotting
         x = self.pixels[:,:,0] * np.cos(self.pixels[:,:,1])
         y = self.pixels[:,:,0] * np.sin(self.pixels[:,:,1])
@@ -244,7 +248,8 @@ class Box:
         brightness_interpolated = rbf(np.transpose(np.array([np.sqrt(xi.flatten()**2 + yi.flatten()**2), xi.flatten()/np.sqrt(xi.flatten()**2 + yi.flatten()**2), yi.flatten()/np.sqrt(xi.flatten()**2 + yi.flatten()**2)])))
         # Plotting the image
         plt.figure(figsize=(8,8))
-        plt.imshow(brightness_interpolated.reshape(xi.shape).T, extent=(xi.min(), xi.max(), yi.min(), yi.max()), origin="lower", cmap="afmhot")
+        # Taking a log to ensure all features are shown
+        plt.imshow(brightness_interpolated.reshape(xi.shape).T, extent=(xi.min(), xi.max(), yi.min(), yi.max()), origin="lower", cmap=cmap)
         plt.xlabel("x")
         plt.ylabel("y")
         plt.show()

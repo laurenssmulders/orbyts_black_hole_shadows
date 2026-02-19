@@ -4,7 +4,7 @@ from scipy.optimize import root
 import matplotlib.pyplot as plt
 from .utils import Metric
 
-def generate_orbit(b, D, metric, n_points=100000):
+def generate_orbit(b, D, metric, n_points=100000, verbose=False):
     """Generates a photon orbit around a black hole with given metric functions 
     A and B.
 
@@ -75,12 +75,14 @@ def generate_orbit(b, D, metric, n_points=100000):
             y = y[:n+2]
             break
         if y[n+1,0] < 1: # If we get inside the event horizon, stop the integration
-            print("Photon captured by the black hole after ", n+1, "steps.")
+            if verbose:
+                print("Photon captured by the black hole after ", n+1, "steps.")
             phi = phi[:n+2]
             y = y[:n+2]
             break
         if y[n+1,0] > 1000: # If we get too far away, stop the integration
-            print("Photon escaped to infinity after ", n+1, "steps.")
+            if verbose:
+                print("Photon escaped to infinity after ", n+1, "steps.")
             phi = phi[:n+2]
             y = y[:n+2]
             break
@@ -88,14 +90,12 @@ def generate_orbit(b, D, metric, n_points=100000):
 
 class Orbit:
     """Class to represent a photon orbit around a black hole."""
-    def __init__(self, b, D, metric, n_points=100000):
+    def __init__(self, b, D, metric, n_points=100000, verbose=False):
         self.b = b
         self.D = D
         self.metric = metric
         self.n_points = n_points
-        self.phi, self.y = generate_orbit(b, D, metric, n_points)
-
-    
+        self.phi, self.y = generate_orbit(b, D, metric, n_points, verbose=verbose)
 
 
 

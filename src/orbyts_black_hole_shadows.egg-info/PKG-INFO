@@ -1,0 +1,21 @@
+Metadata-Version: 2.4
+Name: orbyts_black_hole_shadows
+Version: 0.0.1
+Home-page: https://github.com/laurenssmulders/orbyts_black_hole_shadows
+Author: Laurens Smulders
+Author-email: laurenssmulders21@proton.me
+License: MIT
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: requests>=2.25
+Requires-Dist: numpy>=1.20
+Requires-Dist: matplotlib>=3.3
+Requires-Dist: scipy>=1.6
+Dynamic: license-file
+
+# Testing gravity with Black Hole shadows
+Relevant code for Orbyts project with year 10s testing alternative gravity theories using black hole shadows

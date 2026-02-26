@@ -1,0 +1,15 @@
+LICENSE
+README.md
+pyproject.toml
+setup.cfg
+setup.py
+src/orbyts_black_hole_shadows/__init__.py
+src/orbyts_black_hole_shadows/orbits.py
+src/orbyts_black_hole_shadows/plotting.py
+src/orbyts_black_hole_shadows/sources.py
+src/orbyts_black_hole_shadows/utils.py
+src/orbyts_black_hole_shadows.egg-info/PKG-INFO
+src/orbyts_black_hole_shadows.egg-info/SOURCES.txt
+src/orbyts_black_hole_shadows.egg-info/dependency_links.txt
+src/orbyts_black_hole_shadows.egg-info/requires.txt
+src/orbyts_black_hole_shadows.egg-info/top_level.txt

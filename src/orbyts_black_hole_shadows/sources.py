@@ -178,8 +178,17 @@ class Box:
         """Clears all sources from the box."""
         self.source = np.zeros(self.cartesians.shape[:3], dtype=bool)
 
-    def plot_source(self):
-        """Plots the source in Cartesian coordinates."""
+    def plot_source(self, imsave='', show=True):
+        """
+        Plots the source in Cartesian coordinates.
+        
+        Parameters
+        ----------
+        imsave : string, optional
+            Path to save the plot to. The default is '', not saving anything
+        show : bool, optional
+            Whether to show the plot. The default is True
+        """
         x = self.cartesians[self.source][:,0]
         y = self.cartesians[self.source][:,1]
         z = self.cartesians[self.source][:,2]
@@ -204,7 +213,10 @@ class Box:
         ax.set_xlim(-self.box_size/2, self.box_size/2)
         ax.set_ylim(-self.box_size/2, self.box_size/2)
         ax.set_zlim(-self.box_size/2, self.box_size/2)
-        plt.show()
+        if show:
+            plt.show()
+        if imsave != '':
+            plt.savefig(imsave)
             
     def calculate_photon_rays(self, n_b, metric, D, b_max, n_points=100000, 
                               verbose=False):

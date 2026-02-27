@@ -1,6 +1,6 @@
 Metadata-Version: 2.4
 Name: orbyts_black_hole_shadows
-Version: 0.0.1
+Version: 0.0.2
 Home-page: https://github.com/laurenssmulders/orbyts_black_hole_shadows
 Author: Laurens Smulders
 Author-email: laurenssmulders21@proton.me
@@ -18,4 +18,5 @@ Requires-Dist: scipy>=1.6
 Dynamic: license-file
 
 # Testing gravity with Black Hole shadows
-Relevant code for Orbyts project with year 10s testing alternative gravity theories using black hole shadows
+Package for generating simple black hole shadow pictures for modified black hole
+metrics. Originally intended for a research project done by year 10s.

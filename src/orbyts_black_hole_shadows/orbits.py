@@ -1,12 +1,11 @@
+# orbits.py
+
 """ Generates photon orbits around a black hole."""
+
 import numpy as np
-from scipy.optimize import root
-import matplotlib.pyplot as plt
-from .utils import Metric
 
 def generate_orbit(b, D, metric, n_points=100000, verbose=False):
-    """Generates a photon orbit around a black hole with given metric functions 
-    A and B.
+    """Generates a photon orbit around a black hole
 
     Parameters
     ----------
@@ -14,16 +13,13 @@ def generate_orbit(b, D, metric, n_points=100000, verbose=False):
         Impact parameter of the photon.
     D : float
         Distance of the observer from the black hole.
-    A : function
-        Metric function A(r).
-    B : function
-        Metric function B(r).
-    dAdr : function
-        Derivative of A with respect to r.
-    dBdr : function
-        Derivative of B with respect to r.
+    metric : Metric
+        The metric describing the black hole spacetime
     n_points : int, optional
         Number of points to generate in the orbit. The default is 100000.   
+    verbose : bool, optional
+        Whether to print the fate (capture or escape) of each photon. The 
+        default is False.
 
     Returns
     -------
@@ -89,7 +85,24 @@ def generate_orbit(b, D, metric, n_points=100000, verbose=False):
     return phi, y
 
 class Orbit:
-    """Class to represent a photon orbit around a black hole."""
+    """
+    Class to represent a photon orbit around a black hole.
+    
+    Attributes
+    ----------
+    b : float
+        Impact parameter of the photon.
+    D : float
+        Distance of the observer from the black hole.
+    metric : Metric
+        The metric describing the black hole spacetime
+    n_points : int, optional
+        Number of points to generate in the orbit. The default is 100000.
+    phi : array
+        Array of phi values along the orbit.
+    y : array
+        Array of r and dr/dphi values along the orbit.
+    """
     def __init__(self, b, D, metric, n_points=100000, verbose=False):
         self.b = b
         self.D = D

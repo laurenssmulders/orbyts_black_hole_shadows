@@ -1,9 +1,24 @@
+# utils.py
+
 """General Utilities for the black hole shadow code."""
 
 import numpy as np
 
 class Metric:
-    """Class to represent a metric."""
+    """
+    Class to represent a spherically symmetric, static metric.
+    
+    Attributes
+    ----------
+    A : function
+        The g_tt component of the metric, as a function of radius
+    B: function
+        1 / g_rr component of the metric, as a function of radius
+    dAdr : function
+        dA/dr
+    dBdr : function
+        dB/dr
+    """
     def __init__(self, A, B, dAdr, dBdr):
         self.A = A
         self.B = B

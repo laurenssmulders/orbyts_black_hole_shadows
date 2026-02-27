@@ -1,2 +1,3 @@
 # Testing gravity with Black Hole shadows
-Relevant code for Orbyts project with year 10s testing alternative gravity theories using black hole shadows
+Package for generating simple black hole shadow pictures for modified black hole
+metrics. Originally intended for a research project done by year 10s.

@@ -1,10 +1,12 @@
+# plotting.py
+
 """Functionality for plotting black hole shadows."""
+
 import numpy as np
 import matplotlib.pyplot as plt
-from .orbits import Orbit
-from .utils import Metric
 
-def plot_orbits(orbits, xlim=(-5,5), ylim=(-5,5), add_box_size=False, box_size=0):
+def plot_orbits(orbits, xlim=(-5,5), ylim=(-5,5), add_box_size=False, 
+                box_size=0, imsave='', show=True):
     """Plots the orbits of photons around a black hole.
 
     Parameters
@@ -20,6 +22,11 @@ def plot_orbits(orbits, xlim=(-5,5), ylim=(-5,5), add_box_size=False, box_size=0
         The default is False.
     box_size : float, optional
         Size of the box to add if add_box_size is True. The default is 0
+    imsave : string, optional
+        Path to save the plot to. The default is '', not saving anything
+    show : bool, optional
+        Whether to show the plot. The default is True
+
     """
     fig, ax = plt.subplots()
     # Plotting all the photon trajectories
@@ -38,4 +45,7 @@ def plot_orbits(orbits, xlim=(-5,5), ylim=(-5,5), add_box_size=False, box_size=0
     ax.set_xlim(xlim)
     ax.set_ylim(ylim)
     ax.set_aspect('equal')
-    plt.show()
+    if show:
+        plt.show()
+    if imsave != '':
+        plt.savefig(imsave)

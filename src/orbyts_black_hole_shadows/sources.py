@@ -1,12 +1,30 @@
+# sources.py
+
+"""
+Contains classes representing sources and the main functionality for
+simulating black hole shadows.
+"""
+
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy.interpolate import RBFInterpolator
-from .utils import cartesian_to_spherical, spherical_to_cartesian, cylindrical_to_cartesian, spherical_to_cylindrical, cylindrical_to_spherical, cartesian_to_cylindrical
+from .utils import cartesian_to_spherical, cartesian_to_cylindrical
 from .orbits import Orbit
-from.plotting import plot_orbits
+from .plotting import plot_orbits
 
 class Source:
-    """Class to represent a source."""
+    """
+    Class to represent a source.
+    
+    Attributes
+    ----------
+    condition : function
+        A function taking a (3,) shaped array representing a point in space,
+        returning a boolean depending on whether that point is in the source.
+    coordinates : string
+        The coordinates that condition is defined for. Choose from
+        ["Cartesian", "Spherical", "Cylindrical"].
+    """
     def __init__(self, condition, coordinates):
         self.condition = condition # Condition will be a function of a point in space returning a boolean.
         self.coordinates = coordinates
@@ -14,7 +32,62 @@ class Source:
             raise ValueError("Coordinates must be 'Cartesian', 'Spherical' or 'Cylindrical'.")
         
 class Box:
-    """Class to represent a box."""
+    """
+    Class to represent a box containing the black hole and the source.
+    
+    Attributes
+    ----------
+    box_size : float
+        The edge length of the box (in units of Rs).
+    box_points : int
+        The total number of gridpoints along each direction in the box.
+    viewing_angles : tuple
+        A tuple (theta,phi) the rotation of the source within the box relative
+        to its definition.
+    cartesians : 4D array
+        An array representing all the gridpoints in the box in Cartesian 
+        coordinates. e.g. cartesians[x,y,z] = 
+        -box_size / 2 + box_size/box_points * [x,y,z]
+    shericals : 4D array
+        The gridpoints in spherical polar coordinates.
+    cylindricals : 4D array
+        The grid points in cylindrical polar coordinates.
+    source : 3D array
+        An array representing the gridpoints, with each entry being boolean
+        value indicating whether that point is inside the source.
+    cartesians_source_frame : 4D array
+        The gridpoints in the source frame (rotated by (theta, phi)) in 
+        Cartesian coordinates.
+    sphericals_source_frame : 4D array
+        The gridpoints in the source frame (rotated by (theta, phi)) in 
+        spherical polar coordinates.
+    cylindricals_source_frame : 4D array
+        The gridpoints in the source frame (rotated by (theta, phi)) in 
+        cylindrical polar coordinates.
+    orbits : list
+        A list of Orbit() objects representing the photon orbits calculated in 
+        the box.
+    b_values : 1D array
+        The values of the impact parameter for which orbits have been 
+        calculated.
+    alpha_values : 1D array
+        The values for alpha (the angle to the vertical on the screen).
+    pixels : 3D array
+        Array of the pixel midpoints in (b, alpha) coordinates on the screen.
+    pixel_brightness : 2D array
+        Array of shape pixels.shape[:2] storing the calculated brightness of 
+        each pixel.
+
+    Methods
+    -------
+    add_source
+    clear_sources
+    plot_source
+    calculate_photon_rays
+    plot_box_orbits
+    calculate_pixel_brightness
+    plot_image
+    """
     def __init__(self, box_size, box_points, viewing_angles=(0,0)):
         self.box_size = box_size
         self.box_points = box_points
@@ -68,7 +141,14 @@ class Box:
             ).reshape(box_points,box_points,box_points,3)
 
     def add_source(self, source):
-        """Adds a source to the box."""
+        """
+        Adds a source to the box.
+        
+        Parameters
+        ----------
+        source : Source()
+            A Source() object describing the source location
+        """
         if source.coordinates == "Cartesian":
             for x in range(self.cartesians_source_frame.shape[0]):
                 for y in range(self.cartesians_source_frame.shape[1]):
@@ -95,7 +175,7 @@ class Box:
                         self.source[x,y,z] = False
 
     def clear_sources(self):
-        """Clears the sources from the box."""
+        """Clears all sources from the box."""
         self.source = np.zeros(self.cartesians.shape[:3], dtype=bool)
 
     def plot_source(self):
@@ -126,24 +206,29 @@ class Box:
         ax.set_zlim(-self.box_size/2, self.box_size/2)
         plt.show()
             
-    def calculate_photon_rays(self, n_b, metric, D, b_max, n_points=100000, verbose=False):
-        """Calculates the photon rays through the box ending up on the screen.
+    def calculate_photon_rays(self, n_b, metric, D, b_max, n_points=100000, 
+                              verbose=False):
+        """
+        Calculates the photon rays through the box ending up on the screen.
         
         Parameters
         ----------
         n_b: int
             Number of impact parameters to consider for the rays.
-        metric : Metric object
-            Metric object to use for the calculations.
+        metric : Metric()
+            Metric() object to use for the calculations.
         D : float
-            Distance of the observer from the black hole. 
-            (should just be large enough to be in the asymptotically flat region)
+            Distance of the observer from the black hole (should be large enough 
+            to be in the asymptotically flat region).
         b_max : float
-            Maximum impact parameter to consider for the rays.
-            (should be a bit larger than the box size to capture all rays that 
-            could potentially hit the box)
+            Maximum impact parameter to consider for the rays (should be a bit 
+            larger than the box size to capture all rays that could potentially 
+            hit the box).
         n_points : int, optional
             Number of points to generate in the orbit. The default is 100000.
+        verbose : bool, optional
+            Whether to print the fate (capture or escape) of each photon. The 
+        default is False.
         """
         self.orbits = []
         self.b_values = np.linspace(1e-5, b_max, n_b)
@@ -151,9 +236,16 @@ class Box:
             orbit = Orbit(self.b_values[i], D, metric, n_points, verbose=verbose)
             self.orbits.append(orbit)
     
-    def plot_box_orbits(self):
+    def plot_box_orbits(self, imsave='', show=True):
         """
         Plots the orbits of photons through the box ending up on the screen.
+
+        Parameters
+        ----------
+        imsave : string, optional
+            Path to save the plot to. The default is '', not saving anything.
+        show : bool, optional
+            Whether to show the plot. The default is True.
         """
         plot_orbits(self.orbits, 
                     xlim=(-max(self.b_values[-1],1.2*self.box_size/2), 
@@ -161,10 +253,13 @@ class Box:
                     ylim=(-max(self.b_values[-1],1.2*self.box_size/2), 
                           max(self.b_values[-1],1.2*self.box_size/2)), 
                     add_box_size=True, 
-                    box_size=self.box_size)
+                    box_size=self.box_size,
+                    imsave=imsave, 
+                    show=show)
         
     def calculate_pixel_brightness(self, n_alpha):
-        """Calculates the brightness of each pixel on the screen based on the 
+        """
+        Calculates the brightness of each pixel on the screen based on the 
         number of photons that hit the box and their impact parameters.
         
         Parameters
@@ -224,7 +319,25 @@ class Box:
                 self.pixel_brightness[b_index, alpha_index] /= area
 
     def plot_image(self, n_plot_points=1000, smoothing=0, cmap="afmhot", kernel="linear", log=True):
-        """Plots the image of the box on the screen based on the pixel brightness."""
+        """
+        Plots the image of the box on the screen based on the pixel brightness.
+        
+        Parameters
+        ----------
+        n_plot_points : int, optional
+            The amount of points to plot a brightness for along each direction
+            on the screen. The default is 1000.
+        smoothing : float, optional
+            The amount of smoothing to use for interpolating brightness values.
+            The default is 0.
+        cmap : string, optional
+            The colormap to use for the plot. The default is 'afmhot'.
+        kernel : string, optional
+            The kernel to use for the RBFInterpolator. The default is 'linear'.
+        log : bool, optional
+            Whether to take a log of the brightness values to ensure fainter
+            features are clearly visible. The default is True.
+        """
         # Flattening the arrays
         pixels_flattened = self.pixels.reshape(-1,2)
         # Recasting the angles to deal with periodicity

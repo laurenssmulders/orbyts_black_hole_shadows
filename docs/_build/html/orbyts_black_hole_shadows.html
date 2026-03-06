@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="./">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>orbyts_black_hole_shadows package &#8212; orbyts_black_hole_shadows 0.0.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=61cd365c" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css?v=12dfc556" />
+    <script src="_static/documentation_options.js?v=e3a6060d"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="orbyts_black_hole_shadows" href="modules.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="orbyts-black-hole-shadows-package">
+<h1>orbyts_black_hole_shadows package<a class="headerlink" href="#orbyts-black-hole-shadows-package" title="Link to this heading">¶</a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading">¶</a></h2>
+</section>
+<section id="module-orbyts_black_hole_shadows.orbits">
+<span id="orbyts-black-hole-shadows-orbits-module"></span><h2>orbyts_black_hole_shadows.orbits module<a class="headerlink" href="#module-orbyts_black_hole_shadows.orbits" title="Link to this heading">¶</a></h2>
+<p>Generates photon orbits around a black hole.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="orbyts_black_hole_shadows.orbits.Orbit">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">orbyts_black_hole_shadows.orbits.</span></span><span class="sig-name descname"><span class="pre">Orbit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">b</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">D</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metric</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_points</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/orbyts_black_hole_shadows/orbits.html#Orbit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#orbyts_black_hole_shadows.orbits.Orbit" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Class to represent a photon orbit around a black hole.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="orbyts_black_hole_shadows.orbits.Orbit.b">
+<span class="sig-name descname"><span class="pre">b</span></span><a class="headerlink" href="#orbyts_black_hole_shadows.orbits.Orbit.b" title="Link to this definition">¶</a></dt>
+<dd><p>Impact parameter of the photon.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="orbyts_black_hole_shadows.orbits.Orbit.D">
+<span class="sig-name descname"><span class="pre">D</span></span><a class="headerlink" href="#orbyts_black_hole_shadows.orbits.Orbit.D" title="Link to this definition">¶</a></dt>
+<dd><p>Distance of the observer from the black hole.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="orbyts_black_hole_shadows.orbits.Orbit.metric">
+<span class="sig-name descname"><span class="pre">metric</span></span><a class="headerlink" href="#orbyts_black_hole_shadows.orbits.Orbit.metric" title="Link to this definition">¶</a></dt>
+<dd><p>The metric describing the black hole spacetime</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#orbyts_black_hole_shadows.utils.Metric" title="orbyts_black_hole_shadows.utils.Metric">Metric</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="orbyts_black_hole_shadows.orbits.Orbit.n_points">
+<span class="sig-name descname"><span class="pre">n_points</span></span><a class="headerlink" href="#orbyts_black_hole_shadows.orbits.Orbit.n_points" title="Link to this definition">¶</a></dt>
+<dd><p>Number of points to generate in the orbit. The default is 100000.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int, optional</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="orbyts_black_hole_shadows.orbits.Orbit.phi">
+<span class="sig-name descname"><span class="pre">phi</span></span><a class="headerlink" href="#orbyts_black_hole_shadows.orbits.Orbit.phi" title="Link to this definition">¶</a></dt>
+<dd><p>Array of phi values along the orbit.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>array</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="orbyts_black_hole_shadows.orbits.Orbit.y">
+<span class="sig-name descname"><span class="pre">y</span></span><a class="headerlink" href="#orbyts_black_hole_shadows.orbits.Orbit.y" title="Link to this definition">¶</a></dt>
+<dd><p>Array of r and dr/dphi values along the orbit.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>array</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="orbyts_black_hole_shadows.orbits.generate_orbit">
+<span class="sig-prename descclassname"><span class="pre">orbyts_black_hole_shadows.orbits.</span></span><span class="sig-name descname"><span class="pre">generate_orbit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">b</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">D</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metric</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_points</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/orbyts_black_hole_shadows/orbits.html#generate_orbit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#orbyts_black_hole_shadows.orbits.generate_orbit" title="Link to this definition">¶</a></dt>
+<dd><p>Generates a photon orbit around a black hole</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>b</strong> (<em>float</em>) – Impact parameter of the photon.</p></li>
+<li><p><strong>D</strong> (<em>float</em>) – Distance of the observer from the black hole.</p></li>
+<li><p><strong>metric</strong> (<a class="reference internal" href="#orbyts_black_hole_shadows.utils.Metric" title="orbyts_black_hole_shadows.utils.Metric"><em>Metric</em></a>) – The metric describing the black hole spacetime</p></li>
+<li><p><strong>n_points</strong> (<em>int</em><em>, </em><em>optional</em>) – Number of points to generate in the orbit. The default is 100000.</p></li>
+<li><p><strong>verbose</strong> (<em>bool</em><em>, </em><em>optional</em>) – Whether to print the fate (capture or escape) of each photon. The
+default is False.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>phi</strong> (<em>array</em>) – Array of phi values along the orbit.</p></li>
+<li><p><strong>y</strong> (<em>array</em>) – Array of r and dr/dphi values along the orbit.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-orbyts_black_hole_shadows.plotting">
+<span id="orbyts-black-hole-shadows-plotting-module"></span><h2>orbyts_black_hole_shadows.plotting module<a class="headerlink" href="#module-orbyts_black_hole_shadows.plotting" title="Link to this heading">¶</a></h2>
+<p>Functionality for plotting black hole shadows.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="orbyts_black_hole_shadows.plotting.plot_orbits">
+<span class="sig-prename descclassname"><span class="pre">orbyts_black_hole_shadows.plotting.</span></span><span class="sig-name descname"><span class="pre">plot_orbits</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">orbits</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">xlim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(-5,</span> <span class="pre">5)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ylim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(-5,</span> <span class="pre">5)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">add_box_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">box_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">imsave</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/orbyts_black_hole_shadows/plotting.html#plot_orbits"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#orbyts_black_hole_shadows.plotting.plot_orbits" title="Link to this definition">¶</a></dt>
+<dd><p>Plots the orbits of photons around a black hole.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>orbits</strong> (<em>list</em><em> of </em><em>Orbit objects</em>) – List of Orbit objects to plot.</p></li>
+<li><p><strong>xlim</strong> (<em>tuple</em><em>, </em><em>optional</em>) – Limits for the x-axis. The default is (-5,5).</p></li>
+<li><p><strong>ylim</strong> (<em>tuple</em><em>, </em><em>optional</em>) – Limits for the y-axis. The default is (-5,5).</p></li>
+<li><p><strong>add_box_size</strong> (<em>bool</em><em>, </em><em>optional</em>) – Whether to add a box representing the box size used for the source.
+The default is False.</p></li>
+<li><p><strong>box_size</strong> (<em>float</em><em>, </em><em>optional</em>) – Size of the box to add if add_box_size is True. The default is 0</p></li>
+<li><p><strong>imsave</strong> (<em>string</em><em>, </em><em>optional</em>) – Path to save the plot to. The default is ‘’, not saving anything</p></li>
+<li><p><strong>show</strong> (<em>bool</em><em>, </em><em>optional</em>) – Whether to show the plot. The default is True</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-orbyts_black_hole_shadows.sources">
+<span id="orbyts-black-hole-shadows-sources-module"></span><h2>orbyts_black_hole_shadows.sources module<a class="headerlink" href="#module-orbyts_black_hole_shadows.sources" title="Link to this heading">¶</a></h2>
+<p>Contains classes representing sources and the main functionality for
+simulating black hole shadows.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="orbyts_black_hole_shadows.sources.Box">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">orbyts_black_hole_shadows.sources.</span></span><span class="sig-name descname"><span class="pre">Box</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">box_size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">box_points</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">viewing_angles</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(0,</span> <span class="pre">0)</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/orbyts_black_hole_shadows/sources.html#Box"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#orbyts_black_hole_shadows.sources.Box" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Class to represent a box containing the black hole and the source.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="orbyts_black_hole_shadows.sources.Box.box_size">
+<span class="sig-name descname"><span class="pre">box_size</span></span><a class="headerlink" href="#orbyts_black_hole_shadows.sources.Box.box_size" title="Link to this definition">¶</a></dt>
+<dd><p>The edge length of the box (in units of Rs).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="orbyts_black_hole_shadows.sources.Box.box_points">
+<span class="sig-name descname"><span class="pre">box_points</span></span><a class="headerlink" href="#orbyts_black_hole_shadows.sources.Box.box_points" title="Link to this definition">¶</a></dt>
+<dd><p>The total number of gridpoints along each direction in the box.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="orbyts_black_hole_shadows.sources.Box.viewing_angles">
+<span class="sig-name descname"><span class="pre">viewing_angles</span></span><a class="headerlink" href="#orbyts_black_hole_shadows.sources.Box.viewing_angles" title="Link to this definition">¶</a></dt>
+<dd><p>A tuple (theta,phi) the rotation of the source within the box relative
+to its definition.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="orbyts_black_hole_shadows.sources.Box.cartesians">
+<span class="sig-name descname"><span class="pre">cartesians</span></span><a class="headerlink" href="#orbyts_black_hole_shadows.sources.Box.cartesians" title="Link to this definition">¶</a></dt>
+<dd><p>An array representing all the gridpoints in the box in Cartesian
+coordinates. e.g. cartesians[x,y,z] =
+-box_size / 2 + box_size/box_points * [x,y,z]</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>4D array</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="orbyts_black_hole_shadows.sources.Box.shericals">
+<span class="sig-name descname"><span class="pre">shericals</span></span><a class="headerlink" href="#orbyts_black_hole_shadows.sources.Box.shericals" title="Link to this definition">¶</a></dt>
+<dd><p>The gridpoints in spherical polar coordinates.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>4D array</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="orbyts_black_hole_shadows.sources.Box.cylindricals">
+<span class="sig-name descname"><span class="pre">cylindricals</span></span><a class="headerlink" href="#orbyts_black_hole_shadows.sources.Box.cylindricals" title="Link to this definition">¶</a></dt>
+<dd><p>The grid points in cylindrical polar coordinates.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>4D array</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="orbyts_black_hole_shadows.sources.Box.source">
+<span class="sig-name descname"><span class="pre">source</span></span><a class="headerlink" href="#orbyts_black_hole_shadows.sources.Box.source" title="Link to this definition">¶</a></dt>
+<dd><p>An array representing the gridpoints, with each entry being boolean
+value indicating whether that point is inside the source.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>3D array</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="orbyts_black_hole_shadows.sources.Box.cartesians_source_frame">
+<span class="sig-name descname"><span class="pre">cartesians_source_frame</span></span><a class="headerlink" href="#orbyts_black_hole_shadows.sources.Box.cartesians_source_frame" title="Link to this definition">¶</a></dt>
+<dd><p>The gridpoints in the source frame (rotated by (theta, phi)) in
+Cartesian coordinates.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>4D array</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="orbyts_black_hole_shadows.sources.Box.sphericals_source_frame">
+<span class="sig-name descname"><span class="pre">sphericals_source_frame</span></span><a class="headerlink" href="#orbyts_black_hole_shadows.sources.Box.sphericals_source_frame" title="Link to this definition">¶</a></dt>
+<dd><p>The gridpoints in the source frame (rotated by (theta, phi)) in
+spherical polar coordinates.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>4D array</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="orbyts_black_hole_shadows.sources.Box.cylindricals_source_frame">
+<span class="sig-name descname"><span class="pre">cylindricals_source_frame</span></span><a class="headerlink" href="#orbyts_black_hole_shadows.sources.Box.cylindricals_source_frame" title="Link to this definition">¶</a></dt>
+<dd><p>The gridpoints in the source frame (rotated by (theta, phi)) in
+cylindrical polar coordinates.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>4D array</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="orbyts_black_hole_shadows.sources.Box.orbits">
+<span class="sig-name descname"><span class="pre">orbits</span></span><a class="headerlink" href="#orbyts_black_hole_shadows.sources.Box.orbits" title="Link to this definition">¶</a></dt>
+<dd><p>A list of Orbit() objects representing the photon orbits calculated in
+the box.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="orbyts_black_hole_shadows.sources.Box.b_values">
+<span class="sig-name descname"><span class="pre">b_values</span></span><a class="headerlink" href="#orbyts_black_hole_shadows.sources.Box.b_values" title="Link to this definition">¶</a></dt>
+<dd><p>The values of the impact parameter for which orbits have been
+calculated.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>1D array</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="orbyts_black_hole_shadows.sources.Box.alpha_values">
+<span class="sig-name descname"><span class="pre">alpha_values</span></span><a class="headerlink" href="#orbyts_black_hole_shadows.sources.Box.alpha_values" title="Link to this definition">¶</a></dt>
+<dd><p>The values for alpha (the angle to the vertical on the screen).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>1D array</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="orbyts_black_hole_shadows.sources.Box.pixels">
+<span class="sig-name descname"><span class="pre">pixels</span></span><a class="headerlink" href="#orbyts_black_hole_shadows.sources.Box.pixels" title="Link to this definition">¶</a></dt>
+<dd><p>Array of the pixel midpoints in (b, alpha) coordinates on the screen.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>3D array</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="orbyts_black_hole_shadows.sources.Box.pixel_brightness">
+<span class="sig-name descname"><span class="pre">pixel_brightness</span></span><a class="headerlink" href="#orbyts_black_hole_shadows.sources.Box.pixel_brightness" title="Link to this definition">¶</a></dt>
+<dd><p>Array of shape pixels.shape[:2] storing the calculated brightness of
+each pixel.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>2D array</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">add_source</span> <span class="pre">:</span> <span class="pre">Adds</span> <span class="pre">a</span> <span class="pre">source</span> <span class="pre">to</span> <span class="pre">the</span> <span class="pre">box.</span></span></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">clear_sources</span> <span class="pre">:</span> <span class="pre">Clears</span> <span class="pre">all</span> <span class="pre">sources</span> <span class="pre">from</span> <span class="pre">the</span> <span class="pre">box.</span></span></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">plot_source</span> <span class="pre">:</span> <span class="pre">Plots</span> <span class="pre">the</span> <span class="pre">source</span> <span class="pre">in</span> <span class="pre">Cartesian</span> <span class="pre">coordinates.</span></span></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">calculate_photon_rays</span> <span class="pre">:</span> <span class="pre">Calculates</span> <span class="pre">the</span> <span class="pre">photon</span> <span class="pre">rays</span> <span class="pre">through</span> <span class="pre">the</span> <span class="pre">box</span> <span class="pre">ending</span> <span class="pre">up</span> <span class="pre">on</span> <span class="pre">the</span> <span class="pre">screen.</span></span></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">plot_box_orbits</span> <span class="pre">:</span> <span class="pre">Plots</span> <span class="pre">the</span> <span class="pre">orbits</span> <span class="pre">of</span> <span class="pre">photons</span> <span class="pre">through</span> <span class="pre">the</span> <span class="pre">box</span> <span class="pre">ending</span> <span class="pre">up</span> <span class="pre">on</span> <span class="pre">the</span> <span class="pre">screen.</span></span></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">calculate_pixel_brightness</span> <span class="pre">:</span> <span class="pre">Calculates</span> <span class="pre">the</span> <span class="pre">brightness</span> <span class="pre">of</span> <span class="pre">each</span> <span class="pre">pixel</span> <span class="pre">on</span> <span class="pre">the</span> <span class="pre">screen</span> <span class="pre">based</span> <span class="pre">on</span> <span class="pre">the</span> <span class="pre">number</span> <span class="pre">of</span> <span class="pre">photons</span> <span class="pre">that</span> <span class="pre">hit</span> <span class="pre">the</span> <span class="pre">box</span> <span class="pre">and</span> <span class="pre">their</span> <span class="pre">impact</span> <span class="pre">parameters.</span></span></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">plot_image</span> <span class="pre">:</span> <span class="pre">Plots</span> <span class="pre">the</span> <span class="pre">image</span> <span class="pre">of</span> <span class="pre">the</span> <span class="pre">box</span> <span class="pre">on</span> <span class="pre">the</span> <span class="pre">screen</span> <span class="pre">based</span> <span class="pre">on</span> <span class="pre">the</span> <span class="pre">pixel</span> <span class="pre">brightness.</span></span></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="orbyts_black_hole_shadows.sources.Box.add_source">
+<span class="sig-name descname"><span class="pre">add_source</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">source</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/orbyts_black_hole_shadows/sources.html#Box.add_source"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#orbyts_black_hole_shadows.sources.Box.add_source" title="Link to this definition">¶</a></dt>
+<dd><p>Adds a source to the box.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>source</strong> (<a class="reference internal" href="#orbyts_black_hole_shadows.sources.Source" title="orbyts_black_hole_shadows.sources.Source"><em>Source</em></a><em>(</em><em>)</em>) – A Source() object describing the source location</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="orbyts_black_hole_shadows.sources.Box.calculate_photon_rays">
+<span class="sig-name descname"><span class="pre">calculate_photon_rays</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_b</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metric</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">D</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b_max</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_points</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/orbyts_black_hole_shadows/sources.html#Box.calculate_photon_rays"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#orbyts_black_hole_shadows.sources.Box.calculate_photon_rays" title="Link to this definition">¶</a></dt>
+<dd><p>Calculates the photon rays through the box ending up on the screen.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n_b</strong> (<em>int</em>) – Number of impact parameters to consider for the rays.</p></li>
+<li><p><strong>metric</strong> (<a class="reference internal" href="#orbyts_black_hole_shadows.utils.Metric" title="orbyts_black_hole_shadows.utils.Metric"><em>Metric</em></a><em>(</em><em>)</em>) – Metric() object to use for the calculations.</p></li>
+<li><p><strong>D</strong> (<em>float</em>) – Distance of the observer from the black hole (should be large enough
+to be in the asymptotically flat region).</p></li>
+<li><p><strong>b_max</strong> (<em>float</em>) – Maximum impact parameter to consider for the rays (should be a bit
+larger than the box size to capture all rays that could potentially
+hit the box).</p></li>
+<li><p><strong>n_points</strong> (<em>int</em><em>, </em><em>optional</em>) – Number of points to generate in the orbit. The default is 100000.</p></li>
+<li><p><strong>verbose</strong> (<em>bool</em><em>, </em><em>optional</em>) – Whether to print the fate (capture or escape) of each photon. The</p></li>
+<li><p><strong>False.</strong> (<em>default is</em>)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="orbyts_black_hole_shadows.sources.Box.calculate_pixel_brightness">
+<span class="sig-name descname"><span class="pre">calculate_pixel_brightness</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_alpha</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/orbyts_black_hole_shadows/sources.html#Box.calculate_pixel_brightness"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#orbyts_black_hole_shadows.sources.Box.calculate_pixel_brightness" title="Link to this definition">¶</a></dt>
+<dd><p>Calculates the brightness of each pixel on the screen based on the
+number of photons that hit the box and their impact parameters.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>n_alpha</strong> (<em>int</em>) – Number of alpha values to consider. The number of pixels will be
+n_alpha x n_b.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="orbyts_black_hole_shadows.sources.Box.clear_sources">
+<span class="sig-name descname"><span class="pre">clear_sources</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/orbyts_black_hole_shadows/sources.html#Box.clear_sources"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#orbyts_black_hole_shadows.sources.Box.clear_sources" title="Link to this definition">¶</a></dt>
+<dd><p>Clears all sources from the box.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="orbyts_black_hole_shadows.sources.Box.plot_box_orbits">
+<span class="sig-name descname"><span class="pre">plot_box_orbits</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">imsave</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/orbyts_black_hole_shadows/sources.html#Box.plot_box_orbits"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#orbyts_black_hole_shadows.sources.Box.plot_box_orbits" title="Link to this definition">¶</a></dt>
+<dd><p>Plots the orbits of photons through the box ending up on the screen.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>imsave</strong> (<em>string</em><em>, </em><em>optional</em>) – Path to save the plot to. The default is ‘’, not saving anything.</p></li>
+<li><p><strong>show</strong> (<em>bool</em><em>, </em><em>optional</em>) – Whether to show the plot. The default is True.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="orbyts_black_hole_shadows.sources.Box.plot_image">
+<span class="sig-name descname"><span class="pre">plot_image</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_plot_points</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">smoothing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cmap</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'afmhot'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kernel</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'linear'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">log</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/orbyts_black_hole_shadows/sources.html#Box.plot_image"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#orbyts_black_hole_shadows.sources.Box.plot_image" title="Link to this definition">¶</a></dt>
+<dd><p>Plots the image of the box on the screen based on the pixel brightness.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n_plot_points</strong> (<em>int</em><em>, </em><em>optional</em>) – The amount of points to plot a brightness for along each direction
+on the screen. The default is 1000.</p></li>
+<li><p><strong>smoothing</strong> (<em>float</em><em>, </em><em>optional</em>) – The amount of smoothing to use for interpolating brightness values.
+The default is 0.</p></li>
+<li><p><strong>cmap</strong> (<em>string</em><em>, </em><em>optional</em>) – The colormap to use for the plot. The default is ‘afmhot’.</p></li>
+<li><p><strong>kernel</strong> (<em>string</em><em>, </em><em>optional</em>) – The kernel to use for the RBFInterpolator. The default is ‘linear’.</p></li>
+<li><p><strong>log</strong> (<em>bool</em><em>, </em><em>optional</em>) – Whether to take a log of the brightness values to ensure fainter
+features are clearly visible. The default is True.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="orbyts_black_hole_shadows.sources.Box.plot_source">
+<span class="sig-name descname"><span class="pre">plot_source</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">imsave</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/orbyts_black_hole_shadows/sources.html#Box.plot_source"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#orbyts_black_hole_shadows.sources.Box.plot_source" title="Link to this definition">¶</a></dt>
+<dd><p>Plots the source in Cartesian coordinates.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>imsave</strong> (<em>string</em><em>, </em><em>optional</em>) – Path to save the plot to. The default is ‘’, not saving anything</p></li>
+<li><p><strong>show</strong> (<em>bool</em><em>, </em><em>optional</em>) – Whether to show the plot. The default is True</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="orbyts_black_hole_shadows.sources.Source">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">orbyts_black_hole_shadows.sources.</span></span><span class="sig-name descname"><span class="pre">Source</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">condition</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">coordinates</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/orbyts_black_hole_shadows/sources.html#Source"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#orbyts_black_hole_shadows.sources.Source" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Class to represent a source.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="orbyts_black_hole_shadows.sources.Source.condition">
+<span class="sig-name descname"><span class="pre">condition</span></span><a class="headerlink" href="#orbyts_black_hole_shadows.sources.Source.condition" title="Link to this definition">¶</a></dt>
+<dd><p>A function taking a (3,) shaped array representing a point in space,
+returning a boolean depending on whether that point is in the source.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>function</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="orbyts_black_hole_shadows.sources.Source.coordinates">
+<span class="sig-name descname"><span class="pre">coordinates</span></span><a class="headerlink" href="#orbyts_black_hole_shadows.sources.Source.coordinates" title="Link to this definition">¶</a></dt>
+<dd><p>The coordinates that condition is defined for. Choose from
+[“Cartesian”, “Spherical”, “Cylindrical”].</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>string</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-orbyts_black_hole_shadows.utils">
+<span id="orbyts-black-hole-shadows-utils-module"></span><h2>orbyts_black_hole_shadows.utils module<a class="headerlink" href="#module-orbyts_black_hole_shadows.utils" title="Link to this heading">¶</a></h2>
+<p>General Utilities for the black hole shadow code.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="orbyts_black_hole_shadows.utils.Metric">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">orbyts_black_hole_shadows.utils.</span></span><span class="sig-name descname"><span class="pre">Metric</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">A</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">B</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dAdr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dBdr</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/orbyts_black_hole_shadows/utils.html#Metric"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#orbyts_black_hole_shadows.utils.Metric" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Class to represent a spherically symmetric, static metric.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="orbyts_black_hole_shadows.utils.Metric.A">
+<span class="sig-name descname"><span class="pre">A</span></span><a class="headerlink" href="#orbyts_black_hole_shadows.utils.Metric.A" title="Link to this definition">¶</a></dt>
+<dd><p>The g_tt component of the metric, as a function of radius</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>function</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="orbyts_black_hole_shadows.utils.Metric.B">
+<span class="sig-name descname"><span class="pre">B</span></span><a class="headerlink" href="#orbyts_black_hole_shadows.utils.Metric.B" title="Link to this definition">¶</a></dt>
+<dd><p>1 / g_rr component of the metric, as a function of radius</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>function</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="orbyts_black_hole_shadows.utils.Metric.dAdr">
+<span class="sig-name descname"><span class="pre">dAdr</span></span><a class="headerlink" href="#orbyts_black_hole_shadows.utils.Metric.dAdr" title="Link to this definition">¶</a></dt>
+<dd><p>dA/dr</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>function</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="orbyts_black_hole_shadows.utils.Metric.dBdr">
+<span class="sig-name descname"><span class="pre">dBdr</span></span><a class="headerlink" href="#orbyts_black_hole_shadows.utils.Metric.dBdr" title="Link to this definition">¶</a></dt>
+<dd><p>dB/dr</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>function</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="orbyts_black_hole_shadows.utils.cartesian_to_cylindrical">
+<span class="sig-prename descclassname"><span class="pre">orbyts_black_hole_shadows.utils.</span></span><span class="sig-name descname"><span class="pre">cartesian_to_cylindrical</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/orbyts_black_hole_shadows/utils.html#cartesian_to_cylindrical"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#orbyts_black_hole_shadows.utils.cartesian_to_cylindrical" title="Link to this definition">¶</a></dt>
+<dd><p>Converts Cartesian coordinates to cylindrical coordinates.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>x</strong> (<em>array-like</em>) – Cartesian coordinates (x,y,z).</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Cylindrical coordinates (rho, phi, z).</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>array</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="orbyts_black_hole_shadows.utils.cartesian_to_spherical">
+<span class="sig-prename descclassname"><span class="pre">orbyts_black_hole_shadows.utils.</span></span><span class="sig-name descname"><span class="pre">cartesian_to_spherical</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/orbyts_black_hole_shadows/utils.html#cartesian_to_spherical"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#orbyts_black_hole_shadows.utils.cartesian_to_spherical" title="Link to this definition">¶</a></dt>
+<dd><p>Converts Cartesian coordinates to spherical coordinates.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>x</strong> (<em>array-like</em>) – Cartesian coordinates (x,y,z).</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Spherical coordinates (r, theta, phi).</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>array</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="orbyts_black_hole_shadows.utils.cylindrical_to_cartesian">
+<span class="sig-prename descclassname"><span class="pre">orbyts_black_hole_shadows.utils.</span></span><span class="sig-name descname"><span class="pre">cylindrical_to_cartesian</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">c</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/orbyts_black_hole_shadows/utils.html#cylindrical_to_cartesian"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#orbyts_black_hole_shadows.utils.cylindrical_to_cartesian" title="Link to this definition">¶</a></dt>
+<dd><p>Converts cylindrical coordinates to Cartesian coordinates.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>c</strong> (<em>array-like</em>) – Cylindrical coordinates (rho, phi, z).</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Cartesian coordinates (x,y,z).</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>array</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="orbyts_black_hole_shadows.utils.cylindrical_to_spherical">
+<span class="sig-prename descclassname"><span class="pre">orbyts_black_hole_shadows.utils.</span></span><span class="sig-name descname"><span class="pre">cylindrical_to_spherical</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">c</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/orbyts_black_hole_shadows/utils.html#cylindrical_to_spherical"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#orbyts_black_hole_shadows.utils.cylindrical_to_spherical" title="Link to this definition">¶</a></dt>
+<dd><p>Converts cylindrical coordinates to spherical coordinates.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>c</strong> (<em>array-like</em>) – Cylindrical coordinates (rho, phi, z).</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Spherical coordinates (r, theta, phi).</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>array</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="orbyts_black_hole_shadows.utils.spherical_to_cartesian">
+<span class="sig-prename descclassname"><span class="pre">orbyts_black_hole_shadows.utils.</span></span><span class="sig-name descname"><span class="pre">spherical_to_cartesian</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">s</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/orbyts_black_hole_shadows/utils.html#spherical_to_cartesian"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#orbyts_black_hole_shadows.utils.spherical_to_cartesian" title="Link to this definition">¶</a></dt>
+<dd><p>Converts spherical coordinates to Cartesian coordinates.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>s</strong> (<em>array-like</em>) – Spherical coordinates (r, theta, phi).</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Cartesian coordinates (x,y,z).</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>array</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="orbyts_black_hole_shadows.utils.spherical_to_cylindrical">
+<span class="sig-prename descclassname"><span class="pre">orbyts_black_hole_shadows.utils.</span></span><span class="sig-name descname"><span class="pre">spherical_to_cylindrical</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">s</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/orbyts_black_hole_shadows/utils.html#spherical_to_cylindrical"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#orbyts_black_hole_shadows.utils.spherical_to_cylindrical" title="Link to this definition">¶</a></dt>
+<dd><p>Converts spherical coordinates to cylindrical coordinates.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>s</strong> (<em>array-like</em>) – Spherical coordinates (r, theta, phi).</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Cylindrical coordinates (rho, phi, z).</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>array</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-orbyts_black_hole_shadows">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-orbyts_black_hole_shadows" title="Link to this heading">¶</a></h2>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">orbyts_black_hole_shadows</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">orbyts_black_hole_shadows</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">orbyts_black_hole_shadows package</a></li>
+</ul>
+</li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  <li><a href="modules.html">orbyts_black_hole_shadows</a><ul>
+      <li>Previous: <a href="modules.html" title="previous chapter">orbyts_black_hole_shadows</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2026, Laurens Smulders.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 7.3.7</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 0.7.16</a>
+      
+      |
+      <a href="_sources/orbyts_black_hole_shadows.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

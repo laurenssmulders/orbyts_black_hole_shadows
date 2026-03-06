@@ -80,13 +80,13 @@ class Box:
 
     Methods
     -------
-    add_source
-    clear_sources
-    plot_source
-    calculate_photon_rays
-    plot_box_orbits
-    calculate_pixel_brightness
-    plot_image
+    add_source : Adds a source to the box.
+    clear_sources : Clears all sources from the box.
+    plot_source : Plots the source in Cartesian coordinates.
+    calculate_photon_rays : Calculates the photon rays through the box ending up on the screen.
+    plot_box_orbits : Plots the orbits of photons through the box ending up on the screen.
+    calculate_pixel_brightness : Calculates the brightness of each pixel on the screen based on the number of photons that hit the box and their impact parameters.
+    plot_image : Plots the image of the box on the screen based on the pixel brightness.
     """
     def __init__(self, box_size, box_points, viewing_angles=(0,0)):
         self.box_size = box_size

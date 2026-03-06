@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>orbyts_black_hole_shadows.orbits &#8212; orbyts_black_hole_shadows 0.0.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=61cd365c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/alabaster.css?v=12dfc556" />
+    <script src="../../_static/documentation_options.js?v=e3a6060d"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for orbyts_black_hole_shadows.orbits</h1><div class="highlight"><pre>
+<span></span><span class="c1"># orbits.py</span>
+
+<span class="sd">&quot;&quot;&quot; Generates photon orbits around a black hole.&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<div class="viewcode-block" id="generate_orbit">
+<a class="viewcode-back" href="../../orbyts_black_hole_shadows.html#orbyts_black_hole_shadows.orbits.generate_orbit">[docs]</a>
+<span class="k">def</span> <span class="nf">generate_orbit</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">D</span><span class="p">,</span> <span class="n">metric</span><span class="p">,</span> <span class="n">n_points</span><span class="o">=</span><span class="mi">100000</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Generates a photon orbit around a black hole</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    b : float</span>
+<span class="sd">        Impact parameter of the photon.</span>
+<span class="sd">    D : float</span>
+<span class="sd">        Distance of the observer from the black hole.</span>
+<span class="sd">    metric : Metric</span>
+<span class="sd">        The metric describing the black hole spacetime</span>
+<span class="sd">    n_points : int, optional</span>
+<span class="sd">        Number of points to generate in the orbit. The default is 100000.   </span>
+<span class="sd">    verbose : bool, optional</span>
+<span class="sd">        Whether to print the fate (capture or escape) of each photon. The </span>
+<span class="sd">        default is False.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    phi : array</span>
+<span class="sd">        Array of phi values along the orbit.</span>
+<span class="sd">    y : array</span>
+<span class="sd">        Array of r and dr/dphi values along the orbit.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">b</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">direction</span> <span class="o">=</span> <span class="o">+</span><span class="mi">1</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">direction</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+    <span class="c1"># Initial conditions</span>
+    <span class="n">r0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">D</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">b</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">phi0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arctan</span><span class="p">(</span><span class="n">b</span><span class="o">/</span><span class="n">D</span><span class="p">)</span>
+    <span class="n">kh2</span> <span class="o">=</span> <span class="n">metric</span><span class="o">.</span><span class="n">A</span><span class="p">(</span><span class="n">r0</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">r0</span><span class="o">**</span><span class="mi">2</span><span class="o">*</span><span class="n">metric</span><span class="o">.</span><span class="n">B</span><span class="p">(</span><span class="n">r0</span><span class="p">))</span><span class="o">*</span><span class="p">(</span><span class="n">metric</span><span class="o">.</span><span class="n">B</span><span class="p">(</span><span class="n">r0</span><span class="p">)</span><span class="o">+</span><span class="n">D</span><span class="o">**</span><span class="mi">2</span><span class="o">/</span><span class="n">b</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="c1"># The (k/h)^2 constant to obtain the initial dr/dphi</span>
+
+    <span class="c1"># Residue equation</span>
+    <span class="k">def</span> <span class="nf">res</span><span class="p">(</span><span class="n">yi</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
+            <span class="n">yi</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+            <span class="o">-</span><span class="n">yi</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">metric</span><span class="o">.</span><span class="n">B</span><span class="p">(</span><span class="n">yi</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">-</span><span class="mf">0.5</span><span class="o">*</span><span class="n">yi</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span><span class="o">*</span><span class="n">metric</span><span class="o">.</span><span class="n">dBdr</span><span class="p">(</span><span class="n">yi</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> 
+            <span class="o">+</span> <span class="n">yi</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">**</span><span class="mi">4</span><span class="o">*</span><span class="n">metric</span><span class="o">.</span><span class="n">B</span><span class="p">(</span><span class="n">yi</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">/</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">metric</span><span class="o">.</span><span class="n">A</span><span class="p">(</span><span class="n">yi</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span><span class="o">*</span><span class="n">kh2</span><span class="o">*</span><span class="p">(</span>
+                <span class="mi">4</span><span class="o">/</span><span class="n">yi</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="n">metric</span><span class="o">.</span><span class="n">dBdr</span><span class="p">(</span><span class="n">yi</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">/</span><span class="n">metric</span><span class="o">.</span><span class="n">B</span><span class="p">(</span><span class="n">yi</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">-</span><span class="n">metric</span><span class="o">.</span><span class="n">dAdr</span><span class="p">(</span><span class="n">yi</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">/</span><span class="n">metric</span><span class="o">.</span><span class="n">A</span><span class="p">(</span><span class="n">yi</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+        <span class="p">])</span>
+
+    <span class="n">phi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">n_points</span><span class="p">]))</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">n_points</span><span class="p">,</span><span class="mi">2</span><span class="p">]))</span>
+
+    <span class="c1"># Initial conditions</span>
+    <span class="n">phi</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">phi0</span>
+    <span class="n">y</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">r0</span><span class="p">,</span> <span class="o">-</span><span class="n">r0</span><span class="o">*</span><span class="n">D</span><span class="o">/</span><span class="n">b</span><span class="p">])</span> <span class="c1"># dr/dphi = -r0*D/b from the geometry of the problem</span>
+    <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">n_points</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+        <span class="c1"># Adapting the stepsize if the derivative becomes too large for b &lt; 1, </span>
+        <span class="c1"># to avoid numerical instabilities.</span>
+        <span class="k">if</span> <span class="nb">abs</span><span class="p">(</span><span class="n">y</span><span class="p">[</span><span class="n">n</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span> <span class="o">&gt;</span> <span class="n">y</span><span class="p">[</span><span class="n">n</span><span class="p">,</span><span class="mi">0</span><span class="p">]:</span>
+            <span class="n">dphi</span> <span class="o">=</span> <span class="n">direction</span><span class="o">*</span><span class="mi">4</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="n">n_points</span><span class="o">*</span><span class="n">y</span><span class="p">[</span><span class="n">n</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">/</span><span class="nb">abs</span><span class="p">(</span><span class="n">y</span><span class="p">[</span><span class="n">n</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">dphi</span> <span class="o">=</span> <span class="n">direction</span><span class="o">*</span><span class="mi">4</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="n">n_points</span>
+        <span class="n">k1</span> <span class="o">=</span> <span class="n">res</span><span class="p">(</span><span class="n">y</span><span class="p">[</span><span class="n">n</span><span class="p">])</span>
+        <span class="n">k2</span> <span class="o">=</span> <span class="n">res</span><span class="p">(</span><span class="n">y</span><span class="p">[</span><span class="n">n</span><span class="p">]</span><span class="o">+</span><span class="n">dphi</span><span class="o">/</span><span class="mi">2</span><span class="o">*</span><span class="n">k1</span><span class="p">)</span>
+        <span class="n">k3</span> <span class="o">=</span> <span class="n">res</span><span class="p">(</span><span class="n">y</span><span class="p">[</span><span class="n">n</span><span class="p">]</span><span class="o">+</span><span class="n">dphi</span><span class="o">/</span><span class="mi">2</span><span class="o">*</span><span class="n">k2</span><span class="p">)</span>
+        <span class="n">k4</span> <span class="o">=</span> <span class="n">res</span><span class="p">(</span><span class="n">y</span><span class="p">[</span><span class="n">n</span><span class="p">]</span><span class="o">+</span><span class="n">dphi</span><span class="o">*</span><span class="n">k3</span><span class="p">)</span>
+        <span class="n">phi</span><span class="p">[</span><span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">phi</span><span class="p">[</span><span class="n">n</span><span class="p">]</span> <span class="o">+</span> <span class="n">dphi</span>
+        <span class="n">y</span><span class="p">[</span><span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">y</span><span class="p">[</span><span class="n">n</span><span class="p">]</span> <span class="o">+</span> <span class="n">dphi</span><span class="o">*</span><span class="p">(</span><span class="n">k1</span> <span class="o">+</span> <span class="mi">2</span><span class="o">*</span><span class="n">k2</span> <span class="o">+</span> <span class="mi">2</span><span class="o">*</span><span class="n">k3</span> <span class="o">+</span> <span class="n">k4</span><span class="p">)</span><span class="o">/</span><span class="mi">6</span>
+        <span class="k">if</span> <span class="n">y</span><span class="p">[</span><span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span> <span class="c1"># If we get a negative radius, stop the integration</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Negative radius! After&quot;</span><span class="p">,</span> <span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;steps.&quot;</span><span class="p">)</span>
+            <span class="n">phi</span> <span class="o">=</span> <span class="n">phi</span><span class="p">[:</span><span class="n">n</span><span class="o">+</span><span class="mi">2</span><span class="p">]</span>
+            <span class="n">y</span> <span class="o">=</span> <span class="n">y</span><span class="p">[:</span><span class="n">n</span><span class="o">+</span><span class="mi">2</span><span class="p">]</span>
+            <span class="k">break</span>
+        <span class="k">if</span> <span class="n">y</span><span class="p">[</span><span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span> <span class="c1"># If we get inside the event horizon, stop the integration</span>
+            <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Photon captured by the black hole after &quot;</span><span class="p">,</span> <span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;steps.&quot;</span><span class="p">)</span>
+            <span class="n">phi</span> <span class="o">=</span> <span class="n">phi</span><span class="p">[:</span><span class="n">n</span><span class="o">+</span><span class="mi">2</span><span class="p">]</span>
+            <span class="n">y</span> <span class="o">=</span> <span class="n">y</span><span class="p">[:</span><span class="n">n</span><span class="o">+</span><span class="mi">2</span><span class="p">]</span>
+            <span class="k">break</span>
+        <span class="k">if</span> <span class="n">y</span><span class="p">[</span><span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">1000</span><span class="p">:</span> <span class="c1"># If we get too far away, stop the integration</span>
+            <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Photon escaped to infinity after &quot;</span><span class="p">,</span> <span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;steps.&quot;</span><span class="p">)</span>
+            <span class="n">phi</span> <span class="o">=</span> <span class="n">phi</span><span class="p">[:</span><span class="n">n</span><span class="o">+</span><span class="mi">2</span><span class="p">]</span>
+            <span class="n">y</span> <span class="o">=</span> <span class="n">y</span><span class="p">[:</span><span class="n">n</span><span class="o">+</span><span class="mi">2</span><span class="p">]</span>
+            <span class="k">break</span>
+    <span class="k">return</span> <span class="n">phi</span><span class="p">,</span> <span class="n">y</span></div>
+
+
+<div class="viewcode-block" id="Orbit">
+<a class="viewcode-back" href="../../orbyts_black_hole_shadows.html#orbyts_black_hole_shadows.orbits.Orbit">[docs]</a>
+<span class="k">class</span> <span class="nc">Orbit</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Class to represent a photon orbit around a black hole.</span>
+<span class="sd">    </span>
+<span class="sd">    Attributes</span>
+<span class="sd">    ----------</span>
+<span class="sd">    b : float</span>
+<span class="sd">        Impact parameter of the photon.</span>
+<span class="sd">    D : float</span>
+<span class="sd">        Distance of the observer from the black hole.</span>
+<span class="sd">    metric : Metric</span>
+<span class="sd">        The metric describing the black hole spacetime</span>
+<span class="sd">    n_points : int, optional</span>
+<span class="sd">        Number of points to generate in the orbit. The default is 100000.</span>
+<span class="sd">    phi : array</span>
+<span class="sd">        Array of phi values along the orbit.</span>
+<span class="sd">    y : array</span>
+<span class="sd">        Array of r and dr/dphi values along the orbit.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">D</span><span class="p">,</span> <span class="n">metric</span><span class="p">,</span> <span class="n">n_points</span><span class="o">=</span><span class="mi">100000</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">b</span> <span class="o">=</span> <span class="n">b</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">D</span> <span class="o">=</span> <span class="n">D</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">metric</span> <span class="o">=</span> <span class="n">metric</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">n_points</span> <span class="o">=</span> <span class="n">n_points</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">phi</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">generate_orbit</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">D</span><span class="p">,</span> <span class="n">metric</span><span class="p">,</span> <span class="n">n_points</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span><span class="p">)</span></div>
+
+
+
+
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../index.html">orbyts_black_hole_shadows</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">orbyts_black_hole_shadows</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2026, Laurens Smulders.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 7.3.7</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 0.7.16</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

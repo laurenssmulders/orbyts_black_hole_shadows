@@ -330,7 +330,7 @@ class Box:
                    - self.alpha_values[alpha_index])) / 2
                 self.pixel_brightness[b_index, alpha_index] /= area
 
-    def plot_image(self, n_plot_points=1000, smoothing=0, cmap="afmhot", kernel="linear", log=True, imsave=''):
+    def plot_image(self, n_plot_points=1000, smoothing=0, cmap="afmhot", kernel="linear", log=True, imsave='', show=True):
         """
         Plots the image of the box on the screen based on the pixel brightness.
         
@@ -351,6 +351,8 @@ class Box:
             features are clearly visible. The default is True.
         imsave : string, optional
             Path to save the plot to. The default is '', not saving anything
+        show : bool, optional
+            Whether to show the resulting plot. The default is True.
         """
         # Flattening the arrays
         pixels_flattened = self.pixels.reshape(-1,2)
@@ -381,7 +383,8 @@ class Box:
         plt.ylabel("y")
         if imsave != '':
             plt.savefig(imsave)
-        plt.show()
+        if show:
+            plt.show()
         
 
 

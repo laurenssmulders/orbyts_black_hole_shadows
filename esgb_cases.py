@@ -2,7 +2,7 @@ from orbyts_black_hole_shadows.utils import Metric
 from orbyts_black_hole_shadows.sources import Source, Box
 import numpy as np
 
-a_values = [1e-1]
+a_values = [2e-7, 4e-7, 8e-7, 2e-6, 4e-6, 8e-6]
 
 for a in a_values:
     a_string = str(a).replace(".","p")
@@ -39,12 +39,15 @@ for a in a_values:
     box = Box(box_size=10, box_points=100, viewing_angles=(0,0))
 
     # We then calculate the photon rays for different impact parameters.
-    box.calculate_photon_rays(n_b=20, metric=metric, D=1000, b_max=6.8)
+    box.calculate_photon_rays(n_b=20, metric=metric, D=1000, b_max=10)
     # And plotting these calculated photon rays
     box.plot_box_orbits(imsave='figures/esgb/photon_orbits_a_{a}'.format(a=a_string), show=False)
 
     # We add our source to the box, change "sphere" to a different variable if you
     # have defined a different source
+    print("adding the source...")
     box.add_source(sphere)
+    print("calculating pixel brightness...")
     box.calculate_pixel_brightness(n_alpha=20)
-    box.plot_image(smoothing=1, log=False, imsave='figures/esgb/image_a_{a}'.format(a=a_string)) 
+    print("Saving the final image...")
+    box.plot_image(smoothing=1, log=False, imsave='figures/esgb/image_a_{a}'.format(a=a_string), show=False)
